@@ -1,0 +1,99 @@
+Ссылки:
+	https://www.docker.com/products/docker-desktop/
+	https://hub.docker.com/explore
+
+
+containers - упакованное приложение, которое можно передать кому-либо
+
+
+images - готовый проект, который содержит определённый функционал, и на 	 основе готового проекта мы создаём свой собственный проект  	  
+         (контейнер)
+       - образы (если нужно написать код на php, просто скачиваем образ 	 php)
+       - каждый раз при запуске образа, создаётся новый контейнер
+
+
+docker - команды
+	help   - полная инфо относительно любой команды
+	login  -
+	logout -
+	run    - скачать и запустить контейнер
+		-p 80:3000 - присоединяем локальный порт:порт внутри image
+		-d 	   - чтобы смогли продолжить писать код в терминале
+		-it        - интерактивный режим (сразу после запуска,   
+                             можно взаимодействовать с данным image)
+			   - чтобы выйти из интерактивного режима ctrl + D
+		--name     - название образа
+	pull   - скачать образ, контейнер
+		:latest    - самая последняя версия 
+	info   - полная информация
+	images - детальное инфо про образы
+		 rm        - удаление образа
+	ps     - весь список доступных контейнеров
+		-a         - все контейнеры
+	stop   - остановка одного или несколько контейнеров
+	start  - запуск контейнеров
+	pause  - остановка контейнеров
+	unpause -
+	restart -
+	kill    - убивает контейнер (выводит с ошибкой) 
+	build . - построить image
+		   -t myapp - название создаваемого образа 
+				
+				Работа с  Visual Studio Code
+
+Расширения: 
+	Docker
+	Dev Containers
+
+Создать файл с именем Dockerfile c кодом:
+	FROM openjdk
+	COPY . /java
+	WORKDIR /java
+	RUN javac Main.java
+	CMD [ "java", "Main" ]
+
+Создать файл с именем Main.java c кодом:
+	
+	class Main {
+	    public static void main(String[] args) {
+	         System.out.println("Hello world!");
+	    }
+	}
+
+
+В терминале:
+ 	docker build .  - построить проект (image)
+	docker run -p 3001:8001 032fdeb05287
+
+Вторая часть:	
+
+compose - можно описать много образов, которые можно подключать к проекту 
+	docker-compose.yml - название файла, где описываем образы 
+	docker-compose build - создаёт необходимые образы из файла
+	docker-compose up - для запуска файла 
+	docker-compose duwn - остановить контейнер
+	docker-compose run django django-admin startproject nameofproject . - запуск django 
+	volumes: 
+           - .:/usr/scr/app - volumes это такая настройка которая соединяет наш проект с серверным
+	
+
+ctrl + c - выйти из постоянного отслеживания данных (т.е. останавливает контейнеры phpmyadmin и т.д.)
+
+
+Загрузить свой образ на docker hub:
+	Авторизoваться повсюду
+	docker build -t aleksrusso/my_first_project_to_hub ./php - создать образ с именем начиная с aleksrusso/ (т.е. с логином)
+	docker push aleksrusso/my_first_project_to_hub:latest - загрузка проекта на hub
+	сделать образ публичным
+	docker pull aleksrusso/my_first_project_to_hub - скопировать код для вытягивания образа
+	docker run -p 12:80 --name myapp aleksrusso/my_first_project_to_hub - запустить образ
+
+docker tag aspmvcdocker:dev yourusername/aspmvcdocker:dev - для изменения aspmvcdocker на yourusername/aspmvcdocker
+
+
+
+
+
+
+
+
